@@ -1,5 +1,14 @@
-from bottle import route, template, request, post
+from bottle import route, template, request, post, static_file, get
 import os
+
+
+@route('<filename:re:.*\.css>')
+def css(filename):
+    return static_file(filename,root='./static/css',mimetype='text/css')
+
+@route('<filename:re:.*\.js>')
+def js(filename):
+    return static_file(filename,root='./static/js',mimetype='text/javascript')
 
 @route('/')
 def index():
@@ -37,7 +46,7 @@ def do_cadastrohorario():
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     file_path = "{path}{file}".format(path=save_path, file=upload.filename)
-    upload.save(file_path)
+    upload.save(file_path, overwrite=True)
     return "A música foi salva com sucesso '{0}'.".format(save_path)
 
     if check_cadastro(horario, duracao, upload):

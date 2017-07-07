@@ -1,4 +1,4 @@
-from bottle import route, install, template, run
+from bottle import route, install, template, run, get, static_file
 from bottle_sqlite import SQLitePlugin
 
 install(SQLitePlugin(dbfile='/database/horarios.db'))

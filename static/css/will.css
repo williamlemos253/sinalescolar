@@ -1,0 +1,8 @@
+.form-control {
+    height: 100% !important;
+    padding-left: 40% !important;
+  }
+
+.checkbox, .radio {
+    margin-left: 20px !important;
+  }
