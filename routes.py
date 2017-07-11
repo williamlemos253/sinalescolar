@@ -27,7 +27,9 @@ def cadastrohorario():
 @route('/cadastro', method='POST')
 def do_cadastrohorario():
     domingo = request.forms.get('domingo')
+    print (domingo)
     segunda = request.forms.get('segunda')
+    print (segunda)
     terca = request.forms.get('terca')
     quarta = request.forms.get('quarta')
     quinta = request.forms.get('quinta')
@@ -38,8 +40,8 @@ def do_cadastrohorario():
     upload = request.files.get('upload')
 
     name, ext = os.path.splitext(upload.filename)
-    if ext not in ('.mp3','.wav','.m4a'):
-        return "Somente músicas são aceitas"
+    if ext not in ('.mp3', '.wav', '.m4a'):
+        return 'Somente músicas são aceitas no upload'
 
     save_path = "./static/upload/"
 
