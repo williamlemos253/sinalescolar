@@ -1,9 +1,7 @@
 % rebase('modelo.tpl', title='Page Title')
 
-<div class="container-fluid">
-  <center>
-      <h2>
-        O sistema detectou um erro grave, por favor tente fazer o cadastro novamente
-      </h2>
-  </center>
+<div class="jumbotron">
+  <center><h1>Erro Grave de Sistema</h1></center>
+  <p class="lead">Ocorreu um erro grave no sistema, por favor tente novamente
+    e lembre de dar preferência ao navegador Google Chrome ou Microsoft Edge.</p>
 </div>
