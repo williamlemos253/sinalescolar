@@ -1,9 +1,17 @@
 % rebase('modelo.tpl', title='Page Title')
 
   <div class="form-control">
-     <form action="/cadastro" method="post" enctype="multipart/form-data class="form-horizontal"">
+     <form action="/cadastro" method="post" enctype="multipart/form-data" class="form-horizontal">
           <div class="form-group">
              <div class="checkbox">
+
+                  <input type="hidden" name="domingo" value="0">
+                  <input type="hidden" name="segunda" value="0">
+                  <input type="hidden" name="terca" value="0">
+                  <input type="hidden" name="quarta" value="0">
+                  <input type="hidden" name="quinta" value="0">
+                  <input type="hidden" name="sexta" value="0">
+                  <input type="hidden" name="sabado" value="0">
 
                   <input type="checkbox" id="check1" name="domingo" value="1"><label for="check1"> Domingo</label><br>
                   <input type="checkbox" id="check2" name="segunda" value="1"><label for="check2"> Segunda-Feira</label><br>
