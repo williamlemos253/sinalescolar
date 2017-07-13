@@ -1,12 +1,17 @@
 from bottle import get, post, static_file, template, route, request
-import os
+import os, sqlite3
 import re
+
+
+#conecta ao banco de dados
+conn = sqlite3.connect('./database/database.db')
+c = conn.cursor()
 
 @route('/cadastro')
 def cadastrohorario():
     return template('cadastrohorario')
 
-
+#Recebe os dados do formulário válida e insere no banco de dados
 @route('/cadastro', method='POST')
 def do_cadastrohorario():
     domingo = request.forms.get('domingo')
@@ -37,6 +42,7 @@ def do_cadastrohorario():
     if float(sabado) > 1:
         return template('errograve')
 
+#Válida o horário usando regex
     horario = request.forms.get('horario')
     comparahorario = re.compile('^(1?[0-9]|2[0-3]):[0-5][0-9]$')
     if comparahorario.match(horario):
@@ -45,23 +51,32 @@ def do_cadastrohorario():
         return template('errograve')
 
     duracao = request.forms.get('duracao')
-    if int(duracao) > 99:
+    if float(duracao) > 99:
         return template('errograve')
 
+#válida o formato do upload
     upload = request.files.get('upload')
     name, ext = os.path.splitext(upload.filename)
     if ext not in ('.mp3','.ogg','.wav','.m4a','.aac'):
         return template('erromusica')
 
-    save_path = "./static/upload/"
 
+#Insere os dados no banco de dados
+    dados =[domingo, segunda, terca, quarta, quinta, sexta, sabado, horario, duracao, upload.filename]
+    c.execute('''insert into horarios (domingo, segunda, terca, quarta, quinta,
+    sexta, sabado, horario, duracao, nomemusica )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', dados)
+
+
+#Salva o caminho do upload e faz o upload
+    save_path = "./static/upload/"
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     file_path = "{path}{file}".format(path=save_path, file=upload.filename)
     upload.save(file_path, overwrite=True)
-    return "A música foi salva com sucesso '{0}'.".format(save_path)
 
-    if check_cadastro(horario, duracao, upload):
-        return "<p>Horário cadastrado com sucesso.</p>"
-    else:
-        return "<p>O cadastro do horário falhou, por favor tente novamente.</p>"
+    #Verifica se os campos obrigatórios foram preenchidos e fecha o banco de dados
+    conn.commit()
+    c.close()
+    print('dados inseridos com sucesso')
+    return "<p>Horário cadastrado com sucesso.</p>"
