@@ -77,6 +77,5 @@ def do_cadastrohorario():
 
     #Verifica se os campos obrigatórios foram preenchidos e fecha o banco de dados
     conn.commit()
-    c.close()
     print('dados inseridos com sucesso')
-    return "<p>Horário cadastrado com sucesso.</p>"
+    return template('cadastrocompleto')
