@@ -10,11 +10,3 @@ def css(filename):
 @route('<filename:re:.*\.js>')
 def js(filename):
     return static_file(filename,root='./static/js',mimetype='text/javascript')
-
-@route('/')
-def index():
-    return template ('index')
-
-@route('/hello/<name>')
-def hello(name):
-    return template('<b>Hello {{name}}</b>!', name=name)

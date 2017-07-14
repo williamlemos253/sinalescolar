@@ -7,6 +7,15 @@ import re
 conn = sqlite3.connect('./database/database.db')
 c = conn.cursor()
 
+
+
+@route('/')
+def index():
+    c.execute('select * from horarios order by horario')
+    row = c.fetchall()
+
+    return template('index', rows=row)
+
 @route('/cadastro')
 def cadastrohorario():
     return template('cadastrohorario')
@@ -79,3 +88,11 @@ def do_cadastrohorario():
     conn.commit()
     print('dados inseridos com sucesso')
     return template('cadastrocompleto')
+
+
+@route('/editar/<id:int>')
+def editar(id):
+    c.execute('select * from horarios where id = ?', str(id))
+    editordehorario = c.fetchone()
+    print (editordehorario)
+    return template('editarhorario', editor=editordehorario)
